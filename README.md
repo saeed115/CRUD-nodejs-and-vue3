@@ -4,6 +4,8 @@ api app with node and express
 
 # back-end
 
+### after CD into back-end folder
+
 ## Project setup
 
 ```
@@ -17,6 +19,8 @@ npm run start
 ```
 
 # front-end
+
+### after CD into front-end folder
 
 ## Project setup
 

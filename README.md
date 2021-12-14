@@ -2,9 +2,9 @@
 
 api app with node and express
 
-# back-end
+# Server
 
-### after CD into back-end folder
+### after CD into Server folder
 
 ## Project setup
 
@@ -15,12 +15,12 @@ npm install
 ### Compiles and hot-reloads for development
 
 ```
-npm run start
+npm start
 ```
 
-# front-end
+# Client
 
-### after CD into front-end folder
+### after CD into Client folder
 
 ## Project setup
 

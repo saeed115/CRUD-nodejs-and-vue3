@@ -112,8 +112,8 @@
 </template>
 
 <script>
-import Update from "./Update.vue";
-import Create from "./Create.vue";
+import Update from "./UpdateClient.vue";
+import Create from "./CreateClient.vue";
 import { ref, onMounted } from "vue";
 export default {
   components: {

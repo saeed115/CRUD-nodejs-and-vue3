@@ -1,6 +1,6 @@
 <template>
-  <div class="container mt-5">
-    <form @submit.prevent="submitForm">
+  <div>
+    <form>
       <label class="form-label">Name</label>
       <div class="mb-3">
         <input
@@ -30,32 +30,11 @@
         />
       </div>
 
-      <label class="form-check-label">Providers</label>
-
-      <div class="mb-3">
-        <div class="row g-3">
-          <div class="col-sm-9">
-            <input
-              v-model="provider.name"
-              class="form-control"
-              type="text"
-              placeholder="Phone"
-            />
-          </div>
-          <div class="col-sm">
-            <button
-              @click.prevent="createProvider"
-              class="btn btn-success w-100"
-            >
-              Add provider
-            </button>
-          </div>
-        </div>
-      </div>
+      <CreateProvider @get-providers="getProviders" />
 
       <div class="mb-3">
         <div
-          v-for="provider in providers"
+          v-for="provider in providersList"
           :key="provider._id"
           class="
             mb-3
@@ -67,17 +46,27 @@
         >
           <div>
             <input
+              v-model="client.providers"
+              :value="provider._id"
               type="checkbox"
-              name="provider"
+              name="providers"
               class="form-check-input"
               :id="provider._id"
+              :checked="isInProviderList(client.providers)"
             />
             <label class="form-check-label" :for="provider._id">{{
               provider.name
             }}</label>
           </div>
           <div>
-            <button class="btn btn-info me-3">Edit</button>
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#updateProvider"
+              @click.prevent="editProvider(provider)"
+              class="btn btn-info me-3"
+            >
+              Edit
+            </button>
             <button
               @click.prevent="deleteProvider(provider._id)"
               class="btn btn-danger"
@@ -87,19 +76,51 @@
           </div>
         </div>
       </div>
-
-      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
+    <hr />
+
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <button @click="submitForm" type="submit" class="btn btn-primary me-2">
+          Save
+        </button>
+        <button
+          type="submit"
+          data-bs-dismiss="modal"
+          class="btn btn-outline-secondary"
+        >
+          Cancel
+        </button>
+      </div>
+      <button
+        v-if="client._id"
+        @click="deleteClinet"
+        data-bs-dismiss="modal"
+        type="submit"
+        class="btn btn-danger"
+      >
+        Delete Client
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
+import CreateProvider from "../views/CreateProvider.vue";
+import UpdateProvider from "../views/UpdateProvider.vue";
 import { ref, onMounted } from "vue";
 
 export default {
   props: ["client", "submitForm"],
 
-  setup() {
+  components: {
+    CreateProvider,
+    UpdateProvider,
+  },
+
+  setup(props, context) {
+    const providersList = ref([]);
     const providers = ref([]);
     const provider = ref({
       name: "",
@@ -109,12 +130,14 @@ export default {
     onMounted(() => {
       getProviders();
     });
-
+    function deleteClinet() {
+      context.emit("delete-client", props.client._id);
+    }
     async function getProviders() {
       try {
         const response = await fetch(API_URL);
         const json = await response.json();
-        providers.value = json.data.providers;
+        providersList.value = json.data.providers;
       } catch (error) {
         console.log(error);
       }
@@ -143,6 +166,17 @@ export default {
       }
     }
 
+    function isInProviderList(providersIds) {
+      // for (let providerId of providersIds) {
+      //   console.log(providerId._id);
+      //   return providerId._id === providersList.value.some((item) => item._id);
+      // }
+    }
+
+    function editProvider(obj) {
+      // pro;
+    }
+
     async function deleteProvider(_id) {
       const response = await fetch(`${API_URL}/${_id}`, {
         method: "DELETE",
@@ -152,10 +186,15 @@ export default {
     }
 
     return {
-      providers,
+      providersList,
       provider,
+      providers,
+      deleteClinet,
       createProvider,
       deleteProvider,
+      isInProviderList,
+      getProviders,
+      editProvider,
     };
   },
 };

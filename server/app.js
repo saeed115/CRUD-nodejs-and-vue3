@@ -2,6 +2,11 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
+const errorController = require('./controllers/errorController');
+
+const clientsRouter = require('./routes/v1/clientsRouter');
+const providersRouter = require('./routes/v1/providersRouter');
+
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 
@@ -24,9 +29,6 @@ const options = {
 
 const specs = swaggerJsDoc(options);
 
-const clientsRouter = require('./routes/v1/clientsRouter');
-const providersRouter = require('./routes/v1/providersRouter');
-
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -46,5 +48,7 @@ app.all('*', (req, res, next) => {
 		})
 	);
 });
+
+app.use(errorController);
 
 module.exports = app;

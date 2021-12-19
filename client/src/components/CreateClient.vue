@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ClientForm from "../components/ClientForm.vue";
+import ClientForm from "./ClientForm.vue";
 import { reactive } from "vue";
 export default {
   components: {
@@ -20,6 +20,7 @@ export default {
     });
 
     async function createClient() {
+      console.log(client);
       try {
         const response = await fetch(API_URL, {
           method: "POST",
@@ -41,7 +42,14 @@ export default {
           client.phone = null;
           client.providers = [];
 
-          context.emit("create-clients");
+          if (json.status === "success") {
+            alert("Client Update successfully");
+            context.emit("create-clients");
+          }
+        } else {
+          for (const error of json.messages) {
+            alert(error);
+          }
         }
       } catch (error) {
         console.log(error);

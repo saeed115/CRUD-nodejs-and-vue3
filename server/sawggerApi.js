@@ -20,12 +20,13 @@
  *      phone:
  *        type: number
  *        description: The client phone
- *    example:
- *      id: 61b460aafcbc65f03250e81c
- *      name: saeed digeel
- *      email: saeed@digeel.com
- *      phone: 2494545343
- *   Provider:
+ *      example:
+ *        id: 61b460aafcbc65f03250e81c
+ *        name: saeed digeel
+ *        email: saeed@digeel.com
+ *        phone: 2494545343
+ *
+ *   Providers:
  *    type: object
  *    required:
  *      - name
@@ -36,8 +37,8 @@
  *      name:
  *        type: string
  *        description: The provider name
- *    example:
- *      name: provider 1
+ *      example:
+ *        name: provider 1
  */
 
 /**
@@ -45,7 +46,7 @@
  * tags:
  *   - name: Clients
  *     description: The clients managing API
- *   - name: Provider
+ *   - name: Providers
  *     description: The providers managing API
  */
 
@@ -188,6 +189,34 @@
  *       500:
  *         description: Some server error
  *
+ */
+
+/**
+ * @swagger
+ * /api/v1/clients?page={page}&limit={limit}:
+ *   get:
+ *     summary: Get the client by page and limit
+ *     tags: [Clients]
+ *     parameters:
+ *       - in: path
+ *         name: page
+ *         schema:
+ *           type: number
+ *         description: The client page number
+ *       - in: path
+ *         name: limit
+ *         schema:
+ *           type: number
+ *         description: The client limit number
+ *     responses:
+ *       200:
+ *         description: The clients description by pagination
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Client'
+ *       404:
+ *         description: The clients was not found
  */
 
 /**

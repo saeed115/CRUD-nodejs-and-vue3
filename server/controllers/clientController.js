@@ -6,14 +6,18 @@ exports.getClients = async (req, res) => {
 
 		//Pagination
 		const page = req.query.page * 1 || 1;
-		const limit = req.query.limit * 1 || 100;
+		const limit = req.query.limit * 1 || 50;
 		const skip = (page - 1) * limit;
 
 		query = query.skip(skip).limit(limit);
 
 		if (req.query.page) {
 			const numClient = await Client.countDocuments();
-			if (skip >= numClient) throw new Error('This page not found');
+			console.log(skip);
+			console.log(numClient);
+			if (skip >= numClient) {
+				throw new Error('This page not found');
+			}
 		}
 
 		const clients = await query;
@@ -28,12 +32,12 @@ exports.getClients = async (req, res) => {
 	} catch (error) {
 		res.status(400).json({
 			status: 'fail',
-			message: error,
+			message: error.message,
 		});
 	}
 };
 
-exports.createClient = async (req, res) => {
+exports.createClient = async (req, res, next) => {
 	try {
 		const newClient = await Client.create(req.body);
 
@@ -44,13 +48,7 @@ exports.createClient = async (req, res) => {
 			},
 		});
 	} catch (err) {
-		res.status(400).json({
-			status: 'fail',
-			message: err.message,
-		});
-
-		console.log(res);
-		console.log(err);
+		next(err);
 	}
 };
 

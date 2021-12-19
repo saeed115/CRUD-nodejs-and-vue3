@@ -109,37 +109,10 @@
           <div class="modal-body">
             <!-- Update component -->
             <Update
-              :clientObj="client"
+              :client="client"
               @delete-client="removeClient"
               @get-clients="getClients"
             />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal For Update Provider -->
-    <div
-      class="modal fade"
-      id="updateProvider"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Update Client</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <!-- Update component -->
-            <update-provider></update-provider>
           </div>
         </div>
       </div>
@@ -148,15 +121,13 @@
 </template>
 
 <script>
-import Update from "./UpdateClient.vue";
-import Create from "./CreateClient.vue";
-import UpdateProvider from "./UpdateProvider.vue";
+import Update from "../components/UpdateClient.vue";
+import Create from "../components/CreateClient.vue";
 import { ref, onMounted } from "vue";
 export default {
   components: {
     Create,
     Update,
-    UpdateProvider,
   },
   setup() {
     const clients = ref([]);
@@ -183,15 +154,25 @@ export default {
     }
 
     async function removeClient(_id) {
-      const response = await fetch(`${API_URL}/${_id}`, {
-        method: "DELETE",
-      });
+      try {
+        const response = await fetch(`${API_URL}/${_id}`, {
+          method: "DELETE",
+        });
+
+        if (response.status === 204) {
+          alert("Client Deleted successfully");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
       getClients();
     }
 
-    async function editClient(clientObj) {
-      client.value = clientObj;
+    async function editClient(clientData) {
+      client.value = clientData;
     }
+
     return {
       clients,
       client,

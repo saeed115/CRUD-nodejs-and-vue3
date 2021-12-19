@@ -19,7 +19,7 @@ exports.getProviders = async (req, res) => {
 	}
 };
 
-exports.createProvider = async (req, res) => {
+exports.createProvider = async (req, res, next) => {
 	try {
 		const newProvider = await Provider.create(req.body);
 
@@ -30,10 +30,7 @@ exports.createProvider = async (req, res) => {
 			},
 		});
 	} catch (err) {
-		res.status(400).json({
-			status: 'fail',
-			message: err,
-		});
+		next(err);
 	}
 };
 

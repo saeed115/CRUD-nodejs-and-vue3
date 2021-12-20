@@ -18,12 +18,12 @@ npm install
 cp .env.example .env
 ```
 
-Fill prot and local 'MONGO_URI_LOCAL' mongoose connection string or use atlas mongodb 'MONGO_URI', and you can change settings like video quality and chunks. This are default values
+Use port and local mongoose 'MONGO_URI_LOCAL' or use Atlas MongoDB 'MONGO_URI', these are default values.
 
 ```
-PORT=
+PORT=5000
 MONGO_URI_LOCAL=
-MONGO_URI=
+MONGO_URI=mongodb://localhost:27017/protrans
 ```
 
 ### Compiles and hot-reloads for development
@@ -59,3 +59,9 @@ npm run build
 ```
 npm run lint
 ```
+
+# API Documentaion
+
+### Visit the server's API documentation at localhost:5000/api-doc
+
+### or at PORT if change

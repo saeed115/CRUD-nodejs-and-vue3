@@ -5,7 +5,7 @@ dotenv.config({ path: './.env' });
 const app = require('./app');
 
 mongoose
-	.connect(process.env.MONGO_URI_LOCAL)
+	.connect(process.env.MONGO_URI)
 	.then((con) => {
 		console.log('connected');
 	})

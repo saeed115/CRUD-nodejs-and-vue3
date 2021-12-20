@@ -60,7 +60,7 @@
       </tbody>
     </table>
 
-    <div class="py-3 text-center w-100" v-if="clients == ''">
+    <div class="py-3 text-center w-100" v-if="!loading && clients == ''">
       <h2 class="text-secondary">No data available</h2>
     </div>
 

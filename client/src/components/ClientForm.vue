@@ -43,29 +43,23 @@
         <button @click="submitForm" type="submit" class="btn btn-primary me-2">
           Save
         </button>
-        <button
-          type="submit"
-          data-bs-dismiss="modal"
-          class="btn btn-outline-secondary"
-        >
+        <button data-bs-dismiss="modal" class="btn btn-outline-secondary">
           Cancel
         </button>
       </div>
-      <button
+      <BaseButton
         v-if="client._id"
-        @click="deleteClinet"
+        @click.prevent="deleteClinet"
         data-bs-dismiss="modal"
-        type="submit"
-        class="btn btn-danger"
+        color="danger"
+        >Delete Client</BaseButton
       >
-        Delete Client
-      </button>
     </div>
   </div>
 </template>
 
 <script>
-import { onMounted } from "@vue/runtime-core";
+import BaseButton from "@/components/BaseButton.vue";
 import Provider from "./Providers.vue";
 
 export default {
@@ -73,13 +67,10 @@ export default {
 
   components: {
     Provider,
+    BaseButton,
   },
 
   setup(props, context) {
-    onMounted(() => {
-      // getProviders();
-    });
-
     function getProviders(providers) {
       if (props.client.providers) {
         props.client.providers = providers;

@@ -4,7 +4,7 @@
 
 <script>
 import ClientForm from "./ClientForm.vue";
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 export default {
   components: {
     ClientForm,
@@ -19,6 +19,12 @@ export default {
       providers: [],
     });
 
+    onMounted(() => {
+      client.name = "";
+      client.email = "";
+      client.phone = null;
+      client.providers = [];
+    });
     async function createClient() {
       console.log(client);
       try {

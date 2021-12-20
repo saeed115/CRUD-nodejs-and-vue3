@@ -13,8 +13,6 @@ exports.getClients = async (req, res) => {
 
 		if (req.query.page) {
 			const numClient = await Client.countDocuments();
-			console.log(skip);
-			console.log(numClient);
 			if (skip >= numClient) {
 				throw new Error('This page not found');
 			}

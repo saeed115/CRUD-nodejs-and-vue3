@@ -20,6 +20,8 @@ cp .env.example .env
 
 Use port and local mongoose 'MONGO_URI_LOCAL' or use Atlas MongoDB 'MONGO_URI', these are default values.
 
+Make sure mongoDB and mongoose are also installed and running
+
 ```
 PORT=5000
 MONGO_URI_LOCAL=

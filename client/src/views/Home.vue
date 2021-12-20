@@ -16,7 +16,7 @@
     </div>
 
     <!-- Client List -->
-    <table v-if="!loading" class="table border">
+    <table v-if="!loading && clients != ''" class="table border">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -59,6 +59,10 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="py-3 text-center w-100" v-if="clients == ''">
+      <h2 class="text-secondary">No data available</h2>
+    </div>
 
     <!-- Modal For Create Client -->
     <div
@@ -140,12 +144,14 @@ export default {
       getClients();
     });
 
-    async function getClients(page = 1) {
+    async function getClients() {
       loading.value = true;
       try {
-        const response = await fetch(`${API_URL}?page=${page}&limit=10`);
+        const response = await fetch(API_URL);
         const json = await response.json();
+        console.log(json.data.clients);
         clients.value = json.data.clients;
+        console.log(clients.value);
       } catch (error) {
         console.log(error);
       }
